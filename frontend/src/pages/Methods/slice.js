@@ -56,7 +56,7 @@ const addUserSlice=createSlice({
           updateUsersSuccess(state, action) {
             const updatedIndex = state.data.findIndex((user) => user._id === action.payload._id);
             if (updatedIndex >= 0) {
-              state.data[updatedIndex] = action.payload; // Replace the old user data with the updated data
+              state.data[updatedIndex] = action.payload; 
             }
             state.loading = false;
           },

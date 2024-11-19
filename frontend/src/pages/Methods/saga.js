@@ -2,14 +2,17 @@ import {call,put,takeLatest} from 'redux-saga/effects'
 import axios from 'axios';
 import { actions } from './slice';
 
-function* handleAddUser(action) {
-  try {
-    const response = yield call(axios.post, "http://localhost:5000/users", action.payload);
-    yield put(actions.addUsersSuccess(response.data));
-  } catch (error) {
-    yield put(actions.addUsersError(error.response?.data?.error || error.message));
-    throw error; // Rethrow error to allow frontend to handle it
-  }
+function* handleAddUser(action){
+    try{
+        const response=yield call(axios.post,"http://localhost:5000/users",action.payload);
+        console.log("API Response",response.data);
+        yield put(actions.addUsersSuccess(response.data));
+    }
+    catch(err){
+        console.log("Error in add api: ",err);
+        yield put({type:actions.addUsersError.type,error:err.message});
+
+    }
 }
 
 function* handleGetUser() {
@@ -37,9 +40,9 @@ function* handleGetUser() {
 
   function* handleUpdateUser(action) {
     try {
-      const { id, ...updatedData } = action.payload; // Extract ID and updated data
+      const { id, ...updatedData } = action.payload; 
       const response = yield call(axios.put, `http://localhost:5000/users/${id}`, updatedData);
-      yield put(actions.updateUsersSuccess(response.data)); // Use the API response
+      yield put(actions.updateUsersSuccess(response.data));
     } catch (error) {
       yield put(actions.updateUsersError(error.message));
     }

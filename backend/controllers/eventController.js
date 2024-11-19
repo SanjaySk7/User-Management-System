@@ -35,7 +35,7 @@ const getUser = async (req, res) => {
   }
   catch (err) {
       console.error("Error deleting user:", err.message);
-      res.status(500).json({ error: "Internal Server Error" }); // Handle server errors
+      res.status(500).json({ error: "Internal Server Error" }); 
     }
   };
 

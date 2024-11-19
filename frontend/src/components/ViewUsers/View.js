@@ -6,39 +6,34 @@ import "./View.css";
 const View = () => {
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.addUsers);
-  const [editingRowId, setEditingRowId] = useState(null); // Tracks the row being edited
-  const [editedData, setEditedData] = useState({}); // Tracks the edited data for the row
+  const [editingRowId, setEditingRowId] = useState(null); 
+  const [editedData, setEditedData] = useState({}); 
 
-  // Dispatch action to fetch users
   useEffect(() => {
     dispatch(actions.fetchUsers());
   }, [dispatch]);
 
-  // Handle edit button click
   const handleEdit = (userId, user) => {
     setEditingRowId(userId);
-    setEditedData(user); // Initialize edited data with the current row's data
+    setEditedData(user); 
   };
 
-  // Handle save button click
   const handleSave = () => {
     dispatch(actions.updateUsers({ id: editingRowId,...editedData }));
     setEditingRowId(null);
   };
 
-  // Handle cancel button click
   const handleCancel = () => {
-    setEditingRowId(null); // Exit edit mode without saving
-    setEditedData({}); // Clear edited data
+    setEditingRowId(null); 
+    setEditedData({});
   };
 
-  // Handle field change during editing
   const handleChange = (field, value) => {
     setEditedData((prevData) => ({ ...prevData, [field]: value }));
   };
 
   const handleDelete = (id) => {
-    dispatch(actions.deleteUsers({ id })); // Dispatch delete action with user ID
+    dispatch(actions.deleteUsers({ id }));
   };
 
   const formatDate = (dateString) => {
